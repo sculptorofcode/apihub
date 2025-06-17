@@ -1,0 +1,111 @@
+
+[
+  {
+    "id": "comment-1",
+    "postId": "post-1",
+    "authorId": "user-2",
+    "content": "This is exactly what I've been looking for! The context-aware spending suggestions could be a game-changer. Have you considered integrating with wearable devices to detect stress levels that might trigger impulse purchases?",
+    "createdAt": "2024-06-10T10:30:00Z",
+    "likes": 12,
+    "replies": ["comment-2"]
+  },
+  {
+    "id": "comment-2",
+    "postId": "post-1",
+    "authorId": "user-1",
+    "content": "@sarah_tech That's a brilliant idea! Biometric integration could definitely enhance the contextual awareness. Stress-induced spending is a real problem that traditional budgeting apps don't address.",
+    "createdAt": "2024-06-10T11:15:00Z",
+    "likes": 8,
+    "replies": []
+  },
+  {
+    "id": "comment-3",
+    "postId": "post-1",
+    "authorId": "user-7",
+    "content": "The bill negotiation feature sounds promising, but how would you handle the legal and regulatory aspects? Different regions have very different rules about automated financial negotiations.",
+    "createdAt": "2024-06-10T13:45:00Z",
+    "likes": 15,
+    "replies": []
+  },
+  {
+    "id": "comment-4",
+    "postId": "post-3",
+    "authorId": "user-4",
+    "content": "Privacy-first identity verification is crucial for mass adoption. The selective sharing concept reminds me of zero-knowledge proofs. Are you planning to implement zk-SNARKs or similar technologies?",
+    "createdAt": "2024-06-08T12:20:00Z",
+    "likes": 23,
+    "replies": ["comment-5"]
+  },
+  {
+    "id": "comment-5",
+    "postId": "post-3",
+    "authorId": "user-3",
+    "content": "@emily_green Exactly! Zero-knowledge proofs would be perfect for this. The technical complexity is significant, but the privacy benefits make it worthwhile. We're also exploring homomorphic encryption for certain use cases.",
+    "createdAt": "2024-06-08T14:10:00Z",
+    "likes": 18,
+    "replies": []
+  },
+  {
+    "id": "comment-6",
+    "postId": "post-5",
+    "authorId": "user-6",
+    "content": "As someone working in healthcare UX, I love this concept. The key will be making the AI recommendations transparent and explainable to physicians. Trust is everything in medical diagnosis.",
+    "createdAt": "2024-06-06T14:30:00Z",
+    "likes": 31,
+    "replies": []
+  },
+  {
+    "id": "comment-7",
+    "postId": "post-5",
+    "authorId": "user-10",
+    "content": "This could revolutionize healthcare in underserved areas! Combining this with telemedicine platforms could provide expert-level diagnostic support to rural clinics worldwide.",
+    "createdAt": "2024-06-06T16:45:00Z",
+    "likes": 28,
+    "replies": []
+  },
+  {
+    "id": "comment-8",
+    "postId": "post-8",
+    "authorId": "user-9",
+    "content": "VR training is the future! We've seen great results in manufacturing training. The cost savings alone make this a no-brainer for most industries.",
+    "createdAt": "2024-06-03T13:20:00Z",
+    "likes": 19,
+    "replies": []
+  },
+  {
+    "id": "comment-9",
+    "postId": "post-2",
+    "authorId": "user-3",
+    "content": "The carbon footprint tracking feature is genius. Small businesses especially need this kind of transparency to make better packaging decisions.",
+    "createdAt": "2024-06-09T15:10:00Z",
+    "likes": 14,
+    "replies": []
+  },
+  {
+    "id": "comment-10",
+    "postId": "post-4",
+    "authorId": "user-8",
+    "content": "I love the gamification aspect! Making sustainability engaging and rewarding could drive real behavior change. How would you prevent gaming the system?",
+    "createdAt": "2024-06-07T17:30:00Z",
+    "likes": 16,
+    "replies": []
+  },
+  {
+    "id": "comment-11",
+    "postId": "post-7",
+    "authorId": "user-2",
+    "content": "Micro-investing in emerging markets has huge potential. The educational component is crucial - financial literacy will determine the success of any platform in these regions.",
+    "createdAt": "2024-06-04T16:20:00Z",
+    "likes": 22,
+    "replies": []
+  },
+  {
+    "id": "comment-12",
+    "postId": "post-9",
+    "authorId": "user-4",
+    "content": "Smart waste management is a perfect example of how IoT can solve real urban problems. The environmental impact could be massive if implemented at scale.",
+    "createdAt": "2024-06-02T15:15:00Z",
+    "likes": 11,
+    "replies": []
+  }
+]

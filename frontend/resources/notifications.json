@@ -1,0 +1,135 @@
+
+[
+  {
+    "id": "notif-1",
+    "userId": "user-1",
+    "type": "like",
+    "message": "Sarah Johnson liked your post 'AI-Powered Personal Finance Assistant'",
+    "createdAt": "2024-06-10T10:30:00Z",
+    "isRead": false,
+    "relatedId": "post-1",
+    "relatedType": "post",
+    "actionUserId": "user-2"
+  },
+  {
+    "id": "notif-2",
+    "userId": "user-1",
+    "type": "comment",
+    "message": "James Kim commented on your post 'AI-Powered Personal Finance Assistant'",
+    "createdAt": "2024-06-10T13:45:00Z",
+    "isRead": false,
+    "relatedId": "post-1",
+    "relatedType": "post",
+    "actionUserId": "user-7"
+  },
+  {
+    "id": "notif-3",
+    "userId": "user-2",
+    "type": "follow",
+    "message": "Alex Chen started following you",
+    "createdAt": "2024-06-10T09:00:00Z",
+    "isRead": true,
+    "relatedId": "user-1",
+    "relatedType": "user",
+    "actionUserId": "user-1"
+  },
+  {
+    "id": "notif-4",
+    "userId": "user-3",
+    "type": "like",
+    "message": "Emily Davis liked your post 'Decentralized Identity Verification System'",
+    "createdAt": "2024-06-08T12:20:00Z",
+    "isRead": true,
+    "relatedId": "post-3",
+    "relatedType": "post",
+    "actionUserId": "user-4"
+  },
+  {
+    "id": "notif-5",
+    "userId": "user-4",
+    "type": "message",
+    "message": "Robert Martinez sent you a message",
+    "createdAt": "2024-06-08T11:20:00Z",
+    "isRead": false,
+    "relatedId": "conv-3",
+    "relatedType": "conversation",
+    "actionUserId": "user-9"
+  },
+  {
+    "id": "notif-6",
+    "userId": "user-5",
+    "type": "bookmark",
+    "message": "Anna Thompson bookmarked your post 'AI-Powered Medical Diagnosis Assistant'",
+    "createdAt": "2024-06-06T15:30:00Z",
+    "isRead": true,
+    "relatedId": "post-5",
+    "relatedType": "post",
+    "actionUserId": "user-8"
+  },
+  {
+    "id": "notif-7",
+    "userId": "user-6",
+    "type": "comment",
+    "message": "David Wilson commented on your post 'AR Shopping Experience for Local Retailers'",
+    "createdAt": "2024-06-05T11:15:00Z",
+    "isRead": true,
+    "relatedId": "post-6",
+    "relatedType": "post",
+    "actionUserId": "user-5"
+  },
+  {
+    "id": "notif-8",
+    "userId": "user-7",
+    "type": "follow",
+    "message": "Sophia Lee started following you",
+    "createdAt": "2024-06-05T14:20:00Z",
+    "isRead": false,
+    "relatedId": "user-10",
+    "relatedType": "user",
+    "actionUserId": "user-10"
+  },
+  {
+    "id": "notif-9",
+    "userId": "user-8",
+    "type": "like",
+    "message": "Robert Martinez liked your post 'VR-Based Skill Training Platform'",
+    "createdAt": "2024-06-03T13:20:00Z",
+    "isRead": true,
+    "relatedId": "post-8",
+    "relatedType": "post",
+    "actionUserId": "user-9"
+  },
+  {
+    "id": "notif-10",
+    "userId": "user-9",
+    "type": "comment",
+    "message": "Emily Davis commented on your post 'Smart City Waste Management System'",
+    "createdAt": "2024-06-02T15:15:00Z",
+    "isRead": true,
+    "relatedId": "post-9",
+    "relatedType": "post",
+    "actionUserId": "user-4"
+  },
+  {
+    "id": "notif-11",
+    "userId": "user-10",
+    "type": "message",
+    "message": "James Kim sent you a message",
+    "createdAt": "2024-06-06T10:30:00Z",
+    "isRead": false,
+    "relatedId": "conv-5",
+    "relatedType": "conversation",
+    "actionUserId": "user-7"
+  },
+  {
+    "id": "notif-12",
+    "userId": "user-1",
+    "type": "bookmark",
+    "message": "Michael Brown bookmarked your post 'AI-Powered Personal Finance Assistant'",
+    "createdAt": "2024-06-10T16:45:00Z",
+    "isRead": false,
+    "relatedId": "post-1",
+    "relatedType": "post",
+    "actionUserId": "user-3"
+  }
+]

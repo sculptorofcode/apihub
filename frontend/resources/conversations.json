@@ -1,0 +1,168 @@
+
+[
+  {
+    "id": "conv-1",
+    "participantIds": ["user-1", "user-2"],
+    "lastMessage": "That AI finance idea is really impressive!",
+    "lastMessageAt": "2024-06-10T14:30:00Z",
+    "unreadCount": 2,
+    "messages": [
+      {
+        "messageId": "msg-1",
+        "senderId": "user-2",
+        "text": "Hey Alex! I saw your AI finance assistant post. Really innovative approach!",
+        "sentAt": "2024-06-10T14:15:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-2",
+        "senderId": "user-1",
+        "text": "Thanks Sarah! Your packaging marketplace idea inspired me to think about sustainability in fintech too.",
+        "sentAt": "2024-06-10T14:20:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-3",
+        "senderId": "user-2",
+        "text": "That AI finance idea is really impressive!",
+        "sentAt": "2024-06-10T14:30:00Z",
+        "type": "text",
+        "isRead": false
+      }
+    ]
+  },
+  {
+    "id": "conv-2",
+    "participantIds": ["user-3", "user-5"],
+    "lastMessage": "Let's collaborate on the blockchain identity project",
+    "lastMessageAt": "2024-06-09T16:45:00Z",
+    "unreadCount": 0,
+    "messages": [
+      {
+        "messageId": "msg-4",
+        "senderId": "user-5",
+        "text": "Mike, your decentralized identity system could work great with healthcare AI",
+        "sentAt": "2024-06-09T16:30:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-5",
+        "senderId": "user-3",
+        "text": "Absolutely! Privacy in healthcare is crucial. We should explore this further.",
+        "sentAt": "2024-06-09T16:40:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-6",
+        "senderId": "user-5",
+        "text": "Let's collaborate on the blockchain identity project",
+        "sentAt": "2024-06-09T16:45:00Z",
+        "type": "text",
+        "isRead": true
+      }
+    ]
+  },
+  {
+    "id": "conv-3",
+    "participantIds": ["user-4", "user-9"],
+    "lastMessage": "IoT sensors for carbon tracking would be amazing",
+    "lastMessageAt": "2024-06-08T11:20:00Z",
+    "unreadCount": 1,
+    "messages": [
+      {
+        "messageId": "msg-7",
+        "senderId": "user-4",
+        "text": "Robert, I love your smart city waste management concept!",
+        "sentAt": "2024-06-08T11:00:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-8",
+        "senderId": "user-9",
+        "text": "Thanks Emily! Your carbon credit app could integrate well with IoT sensors",
+        "sentAt": "2024-06-08T11:10:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-9",
+        "senderId": "user-4",
+        "text": "IoT sensors for carbon tracking would be amazing",
+        "sentAt": "2024-06-08T11:20:00Z",
+        "type": "text",
+        "isRead": false
+      }
+    ]
+  },
+  {
+    "id": "conv-4",
+    "participantIds": ["user-6", "user-8"],
+    "lastMessage": "AR shopping + VR training could be powerful",
+    "lastMessageAt": "2024-06-07T13:15:00Z",
+    "unreadCount": 0,
+    "messages": [
+      {
+        "messageId": "msg-10",
+        "senderId": "user-6",
+        "text": "Anna, your VR training platform is exactly what retail needs!",
+        "sentAt": "2024-06-07T13:00:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-11",
+        "senderId": "user-8",
+        "text": "Thanks Lisa! AR and VR complement each other perfectly",
+        "sentAt": "2024-06-07T13:10:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-12",
+        "senderId": "user-6",
+        "text": "AR shopping + VR training could be powerful",
+        "sentAt": "2024-06-07T13:15:00Z",
+        "type": "text",
+        "isRead": true
+      }
+    ]
+  },
+  {
+    "id": "conv-5",
+    "participantIds": ["user-7", "user-10"],
+    "lastMessage": "Financial inclusion in healthcare is underexplored",
+    "lastMessageAt": "2024-06-06T10:30:00Z",
+    "unreadCount": 3,
+    "messages": [
+      {
+        "messageId": "msg-13",
+        "senderId": "user-10",
+        "text": "James, your micro-investment platform could help fund rural healthcare initiatives",
+        "sentAt": "2024-06-06T10:00:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-14",
+        "senderId": "user-7",
+        "text": "That's an interesting angle - healthcare financing for underserved communities",
+        "sentAt": "2024-06-06T10:15:00Z",
+        "type": "text",
+        "isRead": true
+      },
+      {
+        "messageId": "msg-15",
+        "senderId": "user-10",
+        "text": "Financial inclusion in healthcare is underexplored",
+        "sentAt": "2024-06-06T10:30:00Z",
+        "type": "text",
+        "isRead": false
+      }
+    ]
+  }
+]

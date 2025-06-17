@@ -1,0 +1,83 @@
+
+[
+  {
+    "id": "cat-1",
+    "name": "Artificial Intelligence",
+    "description": "Ideas related to AI, machine learning, and intelligent systems",
+    "icon": "🤖",
+    "color": "#3B82F6",
+    "postCount": 156
+  },
+  {
+    "id": "cat-2",
+    "name": "Sustainability",
+    "description": "Eco-friendly solutions and green technology innovations",
+    "icon": "🌱",
+    "color": "#10B981",
+    "postCount": 89
+  },
+  {
+    "id": "cat-3",
+    "name": "FinTech",
+    "description": "Financial technology and digital payment solutions",
+    "icon": "💰",
+    "color": "#F59E0B",
+    "postCount": 124
+  },
+  {
+    "id": "cat-4",
+    "name": "Healthcare",
+    "description": "Medical technology and digital health innovations",
+    "icon": "🏥",
+    "color": "#EF4444",
+    "postCount": 78
+  },
+  {
+    "id": "cat-5",
+    "name": "Education",
+    "description": "EdTech solutions and learning platform innovations",
+    "icon": "📚",
+    "color": "#8B5CF6",
+    "postCount": 92
+  },
+  {
+    "id": "cat-6",
+    "name": "E-commerce",
+    "description": "Online retail and marketplace innovations",
+    "icon": "🛒",
+    "color": "#06B6D4",
+    "postCount": 110
+  },
+  {
+    "id": "cat-7",
+    "name": "IoT",
+    "description": "Internet of Things and connected device solutions",
+    "icon": "📡",
+    "color": "#84CC16",
+    "postCount": 67
+  },
+  {
+    "id": "cat-8",
+    "name": "AR/VR",
+    "description": "Augmented and Virtual Reality experiences",
+    "icon": "🥽",
+    "color": "#F97316",
+    "postCount": 45
+  },
+  {
+    "id": "cat-9",
+    "name": "Blockchain",
+    "description": "Cryptocurrency, DeFi, and distributed ledger technologies",
+    "icon": "⛓️",
+    "color": "#6366F1",
+    "postCount": 134
+  },
+  {
+    "id": "cat-10",
+    "name": "Social Impact",
+    "description": "Technology solutions for social good and community building",
+    "icon": "🤝",
+    "color": "#EC4899",
+    "postCount": 56
+  }
+]

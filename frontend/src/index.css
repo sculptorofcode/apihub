@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme tokens - Elegant energetic palette */
+  --text-50: #f9f5fd;
+  --text-100: #f3eafb;
+  --text-200: #e6d5f7;
+  --text-300: #dac0f3;
+  --text-400: #cdabef;
+  --text-500: #c196eb;
+  --text-600: #9a78bc;
+  --text-700: #745a8d;
+  --text-800: #4d3c5e;
+  --text-900: #271e2f;
+  --text-950: #130f18;
+
+  --background-50: #f8f9fe;
+  --background-100: #f1f4fd;
+  --background-200: #e3e8fb;
+  --background-300: #d5ddf9;
+  --background-400: #c8d2f8;
+  --background-500: #bac7f6;
+  --background-600: #959fc5;
+  --background-700: #707794;
+  --background-800: #4b4f62;
+  --background-900: #252831;
+  --background-950: #131419;
+
+  --primary-50: #f0f1ff;
+  --primary-100: #e0e3ff;
+  --primary-200: #c2c7ff;
+  --primary-300: #a3abff;
+  --primary-400: #848ffe;
+  --primary-500: #6573fe;
+  --primary-600: #515ccb;
+  --primary-700: #3d4598;
+  --primary-800: #292e66;
+  --primary-900: #141733;
+  --primary-950: #0a0c19;
+
+  --secondary-50: #fef2f7;
+  --secondary-100: #fde5ef;
+  --secondary-200: #fbcbdf;
+  --secondary-300: #f9b2cf;
+  --secondary-400: #f798bf;
+  --secondary-500: #f57eaf;
+  --secondary-600: #c4658c;
+  --secondary-700: #934c69;
+  --secondary-800: #623246;
+  --secondary-900: #311923;
+  --secondary-950: #190c12;
+
+  --accent-50: #edfdf8;
+  --accent-100: #dbfbf1;
+  --accent-200: #b7f7e3;
+  --accent-300: #93f3d5;
+  --accent-400: #6fefc7;
+  --accent-500: #4bebb9;
+  --accent-600: #3cbc94;
+  --accent-700: #2d8d6f;
+  --accent-800: #1e5e4a;
+  --accent-900: #0f2f25;
+  --accent-950: #071812;
+
+  /* Shadcn UI variables */
+  --background: var(--background-50);
+  --foreground: var(--text-900);
+  --card: #ffffff;
+  --card-foreground: var(--text-900);
+  --popover: #ffffff;
+  --popover-foreground: var(--text-900);
+  --primary: var(--primary-500);
+  --primary-foreground: #ffffff;
+  --secondary: var(--secondary-500);
+  --secondary-foreground: #ffffff;
+  --muted: var(--background-100);
+  --muted-foreground: var(--text-600);
+  --accent: var(--accent-500);
+  --accent-foreground: var(--text-900);
+  --destructive: #ff5a75;
+  --destructive-foreground: #ffffff;
+  --border: var(--background-300);
+  --input: var(--background-200);
+  --ring: var(--primary-500);
+  --radius: 0.5rem;
+
+  /* Sidebar variables */
+  --sidebar-background: var(--background-50);
+  --sidebar-foreground: var(--text-900);
+  --sidebar-primary: var(--primary-500);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--accent-500);
+  --sidebar-accent-foreground: var(--text-900);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--primary-500);
+}
+
+.dark {
+  /* Dark theme tokens - Elegant energetic palette */
+  --text-50: #f9f5fd;
+  --text-100: #f3eafb;
+  --text-200: #e6d5f7;
+  --text-300: #dac0f3;
+  --text-400: #cdabef;
+  --text-500: #c196eb;
+  --text-600: #9a78bc;
+  --text-700: #745a8d;
+  --text-800: #4d3c5e;
+  --text-900: #271e2f;
+  --text-950: #130f18;
+
+  --background-50: #f8f9fe;
+  --background-100: #f1f4fd;
+  --background-200: #e3e8fb;
+  --background-300: #d5ddf9;
+  --background-400: #c8d2f8;
+  --background-500: #bac7f6;
+  --background-600: #959fc5;
+  --background-700: #707794;
+  --background-800: #4a4e63;
+  --background-900: #2a2d3d;
+  --background-950: #181a24;
+
+  --primary-50: #f0f1ff;
+  --primary-100: #e0e3ff;
+  --primary-200: #c2c7ff;
+  --primary-300: #a3abff;
+  --primary-400: #848ffe;
+  --primary-500: #6573fe;
+  --primary-600: #515ccb;
+  --primary-700: #3d4598;
+  --primary-800: #292e66;
+  --primary-900: #141733;
+  --primary-950: #0a0c19;
+
+  --secondary-50: #fef2f7;
+  --secondary-100: #fde5ef;
+  --secondary-200: #fbcbdf;
+  --secondary-300: #f9b2cf;
+  --secondary-400: #f798bf;
+  --secondary-500: #f57eaf;
+  --secondary-600: #c4658c;
+  --secondary-700: #934c69;
+  --secondary-800: #623246;
+  --secondary-900: #311923;
+  --secondary-950: #190c12;
+
+  --accent-50: #edfdf8;
+  --accent-100: #dbfbf1;
+  --accent-200: #b7f7e3;
+  --accent-300: #93f3d5;
+  --accent-400: #6fefc7;
+  --accent-500: #4bebb9;
+  --accent-600: #3cbc94;
+  --accent-700: #2d8d6f;
+  --accent-800: #1e5e4a;
+  --accent-900: #0f2f25;
+  --accent-950: #071812;
+
+  /* Shadcn UI dark variables */
+  --background: var(--background-950);
+  --foreground: var(--text-100);
+  --card: var(--background-900);
+  --card-foreground: var(--text-100);
+  --popover: var(--background-900);
+  --popover-foreground: var(--text-100);
+  --primary: var(--primary-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--secondary-500);
+  --secondary-foreground: var(--background-900);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-300);
+  --accent: var(--accent-600);
+  --accent-foreground: var(--text-100);
+  --destructive: #ff5a75;
+  --destructive-foreground: var(--text-100);
+  --border: var(--background-700);
+  --input: var(--background-800);
+  --ring: var(--primary-400);
+
+  /* Sidebar dark variables */
+  --sidebar-background: var(--background-900);
+  --sidebar-foreground: var(--text-100);
+  --sidebar-primary: var(--primary-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--accent-600);
+  --sidebar-accent-foreground: var(--text-100);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--primary-400);
+}
+
+/* Custom animations for username availability feedback */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(2px); }
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delay {
+    animation: float 7s ease-in-out 1s infinite;
+  }
+  
+  .animate-float-slow {
+    animation: float 8s ease-in-out 0.5s infinite;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
