@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import PostHeader from './postcard/PostHeader';
 import PostContent from './postcard/PostContent';
@@ -7,6 +7,7 @@ import PostMedia from './postcard/PostMedia';
 import PostActions from './postcard/PostActions';
 import ExpandedPostView from './ExpandedPostView';
 import { Post } from '@/types/post';
+import { usePostInteractions } from '@/hooks';
 
 interface PostCardProps {
   post: Post;
@@ -16,11 +17,12 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = ({
-  post,
-  onLike,
-  onBookmark,
+  post: initialPost,
+  onLike: externalOnLike,
+  onBookmark: externalOnBookmark,
   onNavigate,
 }) => {
+  const { post, toggleLike, toggleBookmark } = usePostInteractions(initialPost);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleCardClick = () => {
@@ -38,8 +40,20 @@ const PostCard: React.FC<PostCardProps> = ({
       handleCardClick();
     }
   };
-
-  console.log('PostCard rendered with post:', post);
+  
+  const handleLike = (postId: string) => {
+    toggleLike();
+    if (externalOnLike) {
+      externalOnLike(postId);
+    }
+  };
+  
+  const handleBookmark = (postId: string) => {
+    toggleBookmark();
+    if (externalOnBookmark) {
+      externalOnBookmark(postId);
+    }
+  };
 
   return (
     <>
@@ -68,23 +82,21 @@ const PostCard: React.FC<PostCardProps> = ({
             </div>
           )}
           {/* Actions */}
-          <div className="px-4 md:px-6 pb-4 md:pb-6">
-            <PostActions
+          <div className="px-4 md:px-6 pb-4 md:pb-6">            <PostActions
               post={post}
-              onLike={onLike}
-              onBookmark={onBookmark}
+              onLike={handleLike}
+              onBookmark={handleBookmark}
             />
           </div>
         </div>
       </Card>
 
-      {/* Expanded Post View */}
-      <ExpandedPostView
+      {/* Expanded Post View */}      <ExpandedPostView
         post={post}
         isOpen={isExpanded}
         onClose={handleCloseExpanded}
-        onLike={onLike}
-        onBookmark={onBookmark}
+        onLike={handleLike}
+        onBookmark={handleBookmark}
       />
     </>
   );

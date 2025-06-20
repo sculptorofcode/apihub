@@ -26,10 +26,6 @@ apiClient.interceptors.request.use(
     config.headers['Pragma'] = 'no-cache';
     config.headers['Expires'] = '0';
     
-    // Add a timestamp to the URL to prevent browser caching
-    const separator = config.url?.includes('?') ? '&' : '?';
-    config.url = `${config.url}${separator}_nocache=${new Date().getTime()}`;
-    
     return config;
   },
   (error) => {

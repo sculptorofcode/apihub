@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Events\PostInteraction;
+use App\Events\CommentInteraction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -98,6 +100,20 @@ class FeedController extends Controller
             $post->likes()->attach($user->id);
             $liked = true;
         }
+        
+        // Get updated likes count
+        $likesCount = $post->likes()->count();
+        
+        // Broadcast the like/unlike event
+        event(new PostInteraction(
+            $postId,
+            'post.liked',
+            [
+                'postId' => $postId,
+                'liked' => $liked,
+                'likesCount' => $likesCount
+            ]
+        ));
 
         return response()->json([
             'success' => true,
@@ -131,6 +147,16 @@ class FeedController extends Controller
             $post->bookmarks()->attach($user->id);
             $bookmarked = true;
         }
+        
+        // Broadcast the bookmark/unbookmark event
+        event(new PostInteraction(
+            $postId,
+            'post.bookmarked',
+            [
+                'postId' => $postId,
+                'bookmarked' => $bookmarked
+            ]
+        ));
 
         return response()->json([
             'success' => true,
@@ -240,6 +266,14 @@ class FeedController extends Controller
 
         // Load the relationships for the response
         $comment->load('user');
+        
+        // Broadcast the comment added event
+        event(new CommentInteraction(
+            $comment->id,
+            $postId,
+            'comment.added',
+            ['comment' => $comment]
+        ));
 
         return response()->json([
             'success' => true,
@@ -300,10 +334,25 @@ class FeedController extends Controller
             $liked = true;
         }
         
+        // Get updated like count
+        $likesCount = $comment->likes()->count();
+        
+        // Broadcast the comment like/unlike event
+        event(new CommentInteraction(
+            $comment->id,
+            $comment->post_id,
+            'comment.liked',
+            [
+                'commentId' => $comment->id,
+                'liked' => $liked,
+                'likesCount' => $likesCount
+            ]
+        ));
+        
         return response()->json([
             'success' => true,
             'liked' => $liked,
-            'likesCount' => $comment->likes()->count(),
+            'likesCount' => $likesCount,
             'message' => $liked ? 'Comment liked' : 'Comment unliked'
         ]);
     }
@@ -457,6 +506,17 @@ class FeedController extends Controller
         $comment->content = $request->input('content');
         $comment->save();
         
+        // Load relationships for the response
+        $comment->load('user');
+        
+        // Broadcast the comment update event
+        event(new CommentInteraction(
+            $comment->id,
+            $comment->post_id,
+            'comment.updated',
+            ['comment' => $comment]
+        ));
+        
         return response()->json([
             'success' => true,
             'message' => 'Comment updated successfully',
@@ -484,8 +544,20 @@ class FeedController extends Controller
             ], 403);
         }
         
+        // Store post_id before deleting the comment
+        $postId = $comment->post_id;
+        $commentId = $comment->id;
+        
         // Delete the comment
         $comment->delete();
+        
+        // Broadcast the comment deleted event
+        event(new CommentInteraction(
+            $commentId,
+            $postId,
+            'comment.deleted',
+            ['commentId' => $commentId]
+        ));
         
         return response()->json([
             'success' => true,

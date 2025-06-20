@@ -23,10 +23,8 @@ const PostHeader: React.FC<PostHeaderProps> = ({ author, createdAt }) => {
 
   const handleAvatarClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
-    navigate(`/profile/${encodeURIComponent(author.name.replace(/\s+/g, '').toLowerCase())}`);
+    navigate(`/profile/${encodeURIComponent(author.username.toLowerCase())}`);
   };
-
-  console.log('PostHeader rendered for:', author);
 
   return (
     <div className="flex items-center space-x-3">

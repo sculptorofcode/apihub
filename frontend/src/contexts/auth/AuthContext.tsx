@@ -3,6 +3,7 @@ import { useToast } from '../../hooks/use-toast';
 import { User, AuthContext } from './auth-types';
 import apiClient from '../../api/apiConfig';
 import { API_ROUTES } from '../../api/apiRoutes';
+import { RealtimeService } from '../../services/RealtimeService';
 
 // Auth provider props
 interface AuthProviderProps {
@@ -13,15 +14,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(localStorage.getItem('auth_token'));
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { toast } = useToast();
-
-  // Check if user is authenticated on mount
+  const { toast } = useToast();  // Check if user is authenticated on mount
   useEffect(() => {
     const checkAuth = async () => {
       if (token) {
         try {
           const response = await apiClient.get(API_ROUTES.user.details);
           setUser(response.data.user);
+          // Store token again to ensure consistency
+          localStorage.setItem('auth_token', token);
         } catch (error) {
           console.error('Authentication check error:', error);
           localStorage.removeItem('auth_token');
@@ -32,17 +33,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     checkAuth();
+    
+    // We don't need to manually connect/disconnect here
+    // RealtimeInitializer will handle this based on auth state
   }, [token]);
 
   // Login function
   const login = async (login: string, password: string): Promise<boolean> => {
     try {
-      const response = await apiClient.post(API_ROUTES.auth.login, { login, password });
-
-      if (response.data.success) {
+      const response = await apiClient.post(API_ROUTES.auth.login, { login, password });      if (response.data.success) {
         localStorage.setItem('auth_token', response.data.token);
         setToken(response.data.token);
         setUser(response.data.user);
+        // The RealtimeInitializer will handle connection once the token is set
         toast({
           title: "Success",
           description: "You've been logged in successfully",
@@ -120,11 +123,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         console.error('Logout error:', error);
       }
-    }
-
-    localStorage.removeItem('auth_token');
+    }    localStorage.removeItem('auth_token');
     setToken(null);
     setUser(null);
+    // Disconnect from realtime service on logout
+    RealtimeService.getInstance().disconnect();
     toast({
       title: "Logged out",
       description: "You've been logged out successfully",

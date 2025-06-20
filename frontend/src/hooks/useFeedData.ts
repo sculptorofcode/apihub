@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { FeedService, ErrorService } from "../services";
+import { FeedService, ErrorService, RealtimeService, RealtimeEventType } from "../services";
 import { Post } from "../types/post";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useToast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useRealtimePosts } from "./use-realtime-updates";
 
 interface UseFeedDataReturn {
   allPosts: Post[];
@@ -25,7 +26,10 @@ interface UseFeedDataReturn {
 }
 
 export const useFeedData = (): UseFeedDataReturn => {
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  // Use initial empty array and let the posts be managed by the realtime hook
+  const [postsData, setPostsData] = useState<Post[]>([]);
+  const { posts: allPosts, setPosts: setAllPosts } = useRealtimePosts(postsData);
+  
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -52,12 +56,17 @@ export const useFeedData = (): UseFeedDataReturn => {
         }
 
         setIsError(false);
-        setErrorMessage(null);
-
-        const { posts, hasMore: moreAvailable } =
+        setErrorMessage(null);        const { posts, hasMore: moreAvailable } =
           await FeedService.getFeedPosts(pageNum);
 
-        setAllPosts((prev) => (isInitial ? posts : [...prev, ...posts]));
+        // Update both the local state and the realtime-managed state
+        if (isInitial) {
+          setPostsData(posts);
+          setAllPosts(posts);
+        } else {
+          setPostsData(prev => [...prev, ...posts]);
+          setAllPosts(prev => [...prev, ...posts]);
+        }
         setHasMore(moreAvailable);
 
         if (isInitial) {

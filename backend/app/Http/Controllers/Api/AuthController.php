@@ -69,6 +69,11 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
+        Log::info('Login attempt', [
+            'login' => $request->login,
+            'ip' => $request->ip(),
+            'userAgent' => $request->header('User-Agent')
+        ]);
         // Validate request data
         $validator = Validator::make($request->all(), [
             'login' => 'required|string',

@@ -4,6 +4,7 @@ export { default as ProfileService } from './ProfileService';
 export { default as FriendshipService } from './FriendshipService';
 export { default as FeedService } from './FeedService';
 export { default as ErrorService } from './ErrorService';
+export { default as RealtimeService, RealtimeEventType } from './RealtimeService';
 
 // Types exports
 export type { 
