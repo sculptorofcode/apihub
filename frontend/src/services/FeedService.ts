@@ -1,16 +1,11 @@
 import apiClient from "../api/apiConfig";
 import { API_ROUTES } from "../api/apiRoutes";
 import { Post, Comment } from "../types/post";
-import { RealtimeService, RealtimeEventType } from "./RealtimeService";
 import { 
   transformPostData, 
   transformCommentData, 
   transformPostArray, 
-  transformCommentArray,
-  transformPartialPostUpdate,
-  transformPartialCommentUpdate,
-  BackendPost,
-  BackendComment 
+  transformCommentArray
 } from "../utils/dataTransformers";
 
 /**
@@ -27,7 +22,8 @@ export class FeedService {
     totalPosts: number;
   }> {
     try {
-      const response = await apiClient.get(API_ROUTES.feed.getPosts(page));      if (response.data.success) {
+      const response = await apiClient.get(API_ROUTES.feed.getPosts(page));
+      if (response.data.success) {
         // Transform posts from backend format to frontend format using our typed transformer
         const transformedPosts = transformPostArray(response.data.posts);
         
@@ -240,75 +236,6 @@ export class FeedService {
       console.error("FeedService.toggleCommentLike error:", error);
       throw error;
     }
-  }
-
-  /**
-   * Setup real-time listeners for post and comment updates
-   * @param onPostUpdate - Callback for handling post updates
-   * @param onCommentUpdate - Callback for handling comment updates
-   */
-  static setupRealtimeListeners(
-    onPostUpdate: (postId: string, updates: Partial<Post>) => void,
-    onCommentUpdate: (commentId: string, updates: Partial<Comment> | null) => void
-  ): () => void {
-    const realtimeService = RealtimeService.getInstance();      // Handler for post like events
-    const handlePostLike = (data: Partial<BackendPost>) => {
-      const postId = (data.id || data.postId || data.post_id) as string;
-      
-      // Use our typed transformer to handle the field conversion
-      const updates = transformPartialPostUpdate(data);
-      onPostUpdate(postId, updates);
-    };
-      // Handler for post bookmark events
-    const handlePostBookmark = (data: Partial<BackendPost>) => {
-      const postId = (data.id || data.postId || data.post_id) as string;
-      
-      // Use our typed transformer to handle the field conversion
-      const updates = transformPartialPostUpdate(data);
-      onPostUpdate(postId, updates);
-    };
-      // Handler for comment added events
-    const handleCommentAdded = (data: { comment: BackendComment }) => {
-      // Transform comment data from backend format
-      const transformedComment = transformCommentData(data.comment);
-      onCommentUpdate(transformedComment.postId, transformedComment);
-    };
-      // Handler for comment updated events
-    const handleCommentUpdated = (data: { comment: BackendComment }) => {
-      // Transform comment data from backend format
-      const transformedComment = transformCommentData(data.comment);
-      onCommentUpdate(transformedComment.id, transformedComment);
-    };
-      // Handler for comment deleted events
-    const handleCommentDeleted = (data: Partial<BackendComment>) => {
-      const commentId = (data.id || data.commentId || data.comment_id) as string;
-      onCommentUpdate(commentId, null);
-    };    // Handler for comment like events
-    const handleCommentLike = (data: Partial<BackendComment>) => {
-      const commentId = (data.id || data.commentId || data.comment_id) as string;
-      
-      // Use our typed transformer to handle the field conversion
-      const updates = transformPartialCommentUpdate(data);
-      onCommentUpdate(commentId, updates);
-    };
-    
-    // Subscribe to all events
-    realtimeService.subscribe(RealtimeEventType.POST_LIKED, handlePostLike);
-    realtimeService.subscribe(RealtimeEventType.POST_BOOKMARKED, handlePostBookmark);
-    realtimeService.subscribe(RealtimeEventType.COMMENT_ADDED, handleCommentAdded);
-    realtimeService.subscribe(RealtimeEventType.COMMENT_UPDATED, handleCommentUpdated);
-    realtimeService.subscribe(RealtimeEventType.COMMENT_DELETED, handleCommentDeleted);
-    realtimeService.subscribe(RealtimeEventType.COMMENT_LIKED, handleCommentLike);
-    
-    // Return cleanup function
-    return () => {
-      realtimeService.unsubscribe(RealtimeEventType.POST_LIKED, handlePostLike);
-      realtimeService.unsubscribe(RealtimeEventType.POST_BOOKMARKED, handlePostBookmark);
-      realtimeService.unsubscribe(RealtimeEventType.COMMENT_ADDED, handleCommentAdded);
-      realtimeService.unsubscribe(RealtimeEventType.COMMENT_UPDATED, handleCommentUpdated);
-      realtimeService.unsubscribe(RealtimeEventType.COMMENT_DELETED, handleCommentDeleted);
-      realtimeService.unsubscribe(RealtimeEventType.COMMENT_LIKED, handleCommentLike);
-    };
   }
 }
 

@@ -173,7 +173,7 @@ export function isBackendPost(obj: unknown): obj is BackendPost {
   if (!obj || typeof obj !== 'object') return false;
   
   const post = obj as Partial<BackendPost>;
-  return typeof post.id === 'string' && typeof post.content === 'string';
+  return post.id.length != 0 && typeof post.content === 'string';
 }
 
 /**

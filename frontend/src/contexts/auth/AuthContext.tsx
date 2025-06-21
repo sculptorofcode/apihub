@@ -3,7 +3,6 @@ import { useToast } from '../../hooks/use-toast';
 import { User, AuthContext } from './auth-types';
 import apiClient from '../../api/apiConfig';
 import { API_ROUTES } from '../../api/apiRoutes';
-import { RealtimeService } from '../../services/RealtimeService';
 
 // Auth provider props
 interface AuthProviderProps {
@@ -126,8 +125,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }    localStorage.removeItem('auth_token');
     setToken(null);
     setUser(null);
-    // Disconnect from realtime service on logout
-    RealtimeService.getInstance().disconnect();
     toast({
       title: "Logged out",
       description: "You've been logged out successfully",

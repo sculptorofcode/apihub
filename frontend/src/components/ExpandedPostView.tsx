@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Post } from './postcard/types';
 import ExpandedPostHeader from './expanded-post/ExpandedPostHeader';
 import ExpandedPostContent from './expanded-post/ExpandedPostContent';
 import ExpandedPostActions from './expanded-post/ExpandedPostActions';
 import CommentsSection from './expanded-post/CommentsSection';
 import { Comment } from './expanded-post/types';
+import { Post } from '@/types/post';
 
 interface ExpandedPostViewProps {
   post: Post;
@@ -140,23 +140,23 @@ const ExpandedPostView: React.FC<ExpandedPostViewProps> = ({
         <div className="flex-1 overflow-y-auto">
           <div className="p-8 space-y-6">
             {/* Author Info */}
-            <ExpandedPostHeader author={post.author} createdAt={post.createdAt} />
+            <ExpandedPostHeader author={post.user} createdAt={post.createdAt} />
 
             {/* Post Content */}
             <ExpandedPostContent
-              title={post.title}
-              description={post.description}
-              tags={post.tags}
-              media={post.media}
+              title={''}
+              description={post.content}
+              tags={[]}
+              media={''}
             />
 
             {/* Actions Bar */}
             <ExpandedPostActions
               postId={post.id}
-              postTitle={post.title}
-              likes={post.likes}
-              isLiked={post.isLiked}
-              isBookmarked={post.isBookmarked}
+              postTitle={''}
+              likes={post.likesCount}
+              isLiked={post.liked}
+              isBookmarked={post.bookmarked}
               commentsCount={comments.length}
               onLike={handleLike}
               onBookmark={handleBookmark}

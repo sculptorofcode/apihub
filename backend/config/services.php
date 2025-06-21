@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    
+    'apihub' => [
+        'key' => env('APIHUB_API_KEY', 'your-api-key'),
+        'base_url' => env('APIHUB_BASE_URL', 'https://api-hub-backend.onrender.com/api/v1'),
+    ],
 
 ];

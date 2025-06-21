@@ -24,7 +24,6 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./contexts/auth/AuthContext";
 import AuthLayout from "./components/auth/AuthLayout";
-import RealtimeInitializer from "./components/RealtimeInitializer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,8 +42,8 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
-      <Sonner />      <AuthProvider>
-        <RealtimeInitializer />
+      <Sonner />
+      <AuthProvider>
         <BrowserRouter>
           <Routes>            <Route path="/auth/login" element={
             <AuthLayout title="Sign In" subtitle="Welcome back! Sign in with your username or email to continue." image="/auth-bg.svg">

@@ -25,6 +25,9 @@ class Post extends Model
         'video',
         'file',
         'visibility',
+        'media_url',
+        'media_type',
+        'location',
     ];
 
     /**

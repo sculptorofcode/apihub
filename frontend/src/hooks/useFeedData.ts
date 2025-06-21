@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { FeedService, ErrorService, RealtimeService, RealtimeEventType } from "../services";
+import { FeedService, ErrorService } from "../services";
 import { Post } from "../types/post";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useToast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useRealtimePosts } from "./use-realtime-updates";
 
 interface UseFeedDataReturn {
   allPosts: Post[];
@@ -15,8 +14,6 @@ interface UseFeedDataReturn {
   hasMore: boolean;
   isLoadingMore: boolean;
   loadMoreRef: React.RefObject<HTMLDivElement>;
-  handleLike: (postId: string) => Promise<void>;
-  handleBookmark: (postId: string) => Promise<void>;
   handleNavigate: (username: string) => void;
   createPost: (
     data:
@@ -26,10 +23,8 @@ interface UseFeedDataReturn {
 }
 
 export const useFeedData = (): UseFeedDataReturn => {
-  // Use initial empty array and let the posts be managed by the realtime hook
-  const [postsData, setPostsData] = useState<Post[]>([]);
-  const { posts: allPosts, setPosts: setAllPosts } = useRealtimePosts(postsData);
-  
+  // State for posts data
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -56,16 +51,13 @@ export const useFeedData = (): UseFeedDataReturn => {
         }
 
         setIsError(false);
-        setErrorMessage(null);        const { posts, hasMore: moreAvailable } =
+        setErrorMessage(null);
+        const { posts, hasMore: moreAvailable } =
           await FeedService.getFeedPosts(pageNum);
-
-        // Update both the local state and the realtime-managed state
         if (isInitial) {
-          setPostsData(posts);
           setAllPosts(posts);
         } else {
-          setPostsData(prev => [...prev, ...posts]);
-          setAllPosts(prev => [...prev, ...posts]);
+          setAllPosts((prev) => [...prev, ...posts]);
         }
         setHasMore(moreAvailable);
 
@@ -132,75 +124,6 @@ export const useFeedData = (): UseFeedDataReturn => {
     }
   }, [page, fetchPosts]);
 
-  // Handle post liking
-  const handleLike = async (postId: string) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to like posts",
-        variant: "default",
-      });
-      return;
-    }
-
-    try {
-      const { liked, likesCount } = await FeedService.toggleLike(postId);
-
-      // Update post in the state
-      setAllPosts((prev) =>
-        prev.map((post) =>
-          post.id === postId ? { ...post, liked, likesCount } : post
-        )
-      );
-    } catch (error) {
-      toast({
-        title: "Action failed",
-        description: ErrorService.getErrorMessage(error, "Unable to like post"),
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Handle bookmarking
-  const handleBookmark = async (postId: string) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to bookmark posts",
-        variant: "default",
-      });
-      return;
-    }
-
-    try {
-      const { bookmarked } = await FeedService.toggleBookmark(postId);
-
-      // Update post in the state
-      setAllPosts((prev) =>
-        prev.map((post) =>
-          post.id === postId ? { ...post, bookmarked } : post
-        )
-      );
-
-      toast({
-        title: bookmarked ? "Post bookmarked" : "Bookmark removed",
-        description: bookmarked
-          ? "This post has been added to your bookmarks"
-          : "This post has been removed from your bookmarks",
-        variant: "default",
-      });
-    } catch (error) {
-      toast({
-        title: "Action failed",
-        description: ErrorService.getErrorMessage(
-          error,
-          "Unable to bookmark post"
-        ),
-        variant: "destructive",
-      });
-    }
-  };
-
   // Handle navigation to user profile
   const handleNavigate = (username: string) => {
     if (username) {
@@ -248,11 +171,15 @@ export const useFeedData = (): UseFeedDataReturn => {
       return false;
     }
   };
-
   // Refetch all posts (used after creating a post or refreshing the feed)
   const refetch = useCallback(() => {
     setFetchTrigger((prev) => prev + 1);
-  }, []);
+    toast({
+      title: "Feed refreshed",
+      description: "Latest posts have been loaded",
+      variant: "default",
+    });
+  }, [toast]);
 
   return {
     allPosts,
@@ -263,8 +190,6 @@ export const useFeedData = (): UseFeedDataReturn => {
     hasMore,
     isLoadingMore,
     loadMoreRef,
-    handleLike,
-    handleBookmark,
     handleNavigate,
     createPost,
   };

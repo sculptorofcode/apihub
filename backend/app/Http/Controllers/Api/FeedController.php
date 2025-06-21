@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client;
 
 class FeedController extends Controller
 {
@@ -179,9 +181,11 @@ class FeedController extends Controller
         $validator = Validator::make($request->all(), [
             'content' => 'required|string|max:5000',
             'visibility' => 'sometimes|in:public,friends,private',
-            'image' => 'sometimes|image|mimes:jpg,jpeg,png,gif|max:5120', // 5MB max
-            'video' => 'sometimes|mimes:mp4,avi,mov|max:51200', // 50MB max
-            'file' => 'sometimes|mimes:pdf,doc,docx,txt|max:10240', // 10MB max
+            'media' => 'sometimes|file|max:20480', // 20MB max
+            'location' => 'nullable|string|max:255',
+            'image' => 'sometimes|image|mimes:jpg,jpeg,png,gif|max:5120', // 5MB max (legacy)
+            'video' => 'sometimes|mimes:mp4,avi,mov|max:51200', // 50MB max (legacy)
+            'file' => 'sometimes|mimes:pdf,doc,docx,txt|max:10240', // 10MB max (legacy)
         ]);
 
         if ($validator->fails()) {
@@ -191,16 +195,48 @@ class FeedController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
-        // Create the post
+        
+        // Create the post - we'll save it after handling media
         $post = new Post([
             'user_id' => $user->id,
             'content' => $request->input('content'),
             'visibility' => $request->input('visibility', 'public'),
+            'location' => $request->input('location'),
         ]);
-
+        
+        // Handle new media upload if present using the external API
+        if ($request->hasFile('media')) {
+            $mediaFile = $request->file('media');
+            $mediaType = substr($mediaFile->getMimeType(), 0, strpos($mediaFile->getMimeType(), '/'));
+            
+            // Only process if it's an image (API supports images)
+            if ($mediaType === 'image') {
+                $name = $user->name ?? 'User';
+                $title = 'Post from ' . $name;
+                $location = $request->input('location', '');
+                
+                $apiResponse = $this->uploadImageToApiHub($mediaFile, $name, $title, $location);
+                
+                // Store the media URL returned from the API
+                if (isset($apiResponse['image_url'])) {
+                    $post->media_url = $apiResponse['image_url'];
+                    $post->media_type = $mediaType;
+                }
+            } else {
+                // For non-image files, we can still use local storage as fallback
+                // or implement support for other media types as needed
+                $directory = 'posts/' . ($mediaType === 'video' ? 'videos' : 'files');
+                $path = $mediaFile->store($directory, 'public');
+                
+                $post->media_url = Storage::url($path);
+                $post->media_type = $mediaType;
+            }
+        }
+        
+        // Save the post after handling media
         $post->save();
-
-        // Handle file uploads
+        
+        // Legacy file upload support - for backward compatibility
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('posts/images', 'public');
             $post->image = Storage::url($path);
@@ -645,5 +681,118 @@ class FeedController extends Controller
             'hasMore' => $posts->hasMorePages(),
             'total' => $posts->total(),
         ]);
+    }
+
+    /**
+     * Get the API Hub client
+     *
+     * @return \GuzzleHttp\Client
+     */
+    private function getApiHubClient()
+    {
+        $baseUrl = config('services.apihub.base_url', 'https://api-hub-backend.onrender.com/api/v1');
+        
+        return new Client([
+            'base_uri' => $baseUrl,
+            'timeout' => 30,
+            'headers' => [
+                'Authorization' => 'Bearer ' . config('services.apihub.key', 'your-api-key'),
+            ],
+        ]);
+    }
+
+    /**
+     * Upload image to API Hub
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @param string $name
+     * @param string $title
+     * @param string $location
+     * @return array|null
+     */
+    private function uploadImageToApiHub($file, $name, $title, $location = '')
+    {
+        try {
+            $formData = new \GuzzleHttp\Psr7\MultipartStream([
+                [
+                    'name'     => 'name',
+                    'contents' => $name,
+                ],
+                [
+                    'name'     => 'title',
+                    'contents' => $title,
+                ],
+                [
+                    'name'     => 'location',
+                    'contents' => $location,
+                ],
+                [
+                    'name'     => 'image',
+                    'contents' => fopen($file->getPathname(), 'r'),
+                    'filename' => $file->getClientOriginalName(),
+                ],
+            ]);
+            
+            $client = $this->getApiHubClient();
+            $response = $client->request('POST', '/apicollection/postimg', [
+                'body' => $formData,
+            ]);
+            
+            if ($response->getStatusCode() === 200) {
+                return json_decode($response->getBody(), true);
+            }
+        } catch (\Exception $e) {
+            Log::error('API Hub upload error: ' . $e->getMessage());
+        }
+        
+        return null;
+    }
+
+    /**
+     * Get user images from API Hub
+     *
+     * @return array|null
+     */
+    private function getUserImagesFromApiHub()
+    {
+        try {
+            $client = $this->getApiHubClient();
+            $response = $client->request('POST', '/apicollection/getyourimage', [
+                'json' => [
+                    'apiKey' => config('services.apihub.key', 'your-api-key'),
+                ],
+            ]);
+            
+            if ($response->getStatusCode() === 200) {
+                return json_decode($response->getBody(), true);
+            }
+        } catch (\Exception $e) {
+            Log::error('API Hub get images error: ' . $e->getMessage());
+        }
+        
+        return null;
+    }
+
+    /**
+     * Get user images from API Hub
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUserImages(Request $request)
+    {
+        $result = $this->getUserImagesFromApiHub();
+        
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'data' => $result
+            ]);
+        }
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to retrieve images'
+        ], 500);
     }
 }

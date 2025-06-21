@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FeedController;
 use App\Http\Controllers\Api\FriendsController;
+use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -25,7 +26,9 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/auth/check-username', [AuthController::class, 'checkUsernameAvailability']);
 
 // Public Feed Routes
-Route::get('/feed', [FeedController::class, 'index']);
+Route::group(['middleware' => ['auth.optional']], function () {
+  Route::get('/feed', [FeedController::class, 'index']);
+});
 Route::get('/users/{username}/posts', [FeedController::class, 'getUserPosts']);
 
 // Email Verification Routes
@@ -37,17 +40,23 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', [AuthController::class, 'user']);
   Route::post('/auth/logout', [AuthController::class, 'logout']);
   Route::post('/auth/refresh', [AuthController::class, 'refresh']);
+
   // Profile Routes
   Route::get('/profile/{username}', [AuthController::class, 'show']);
   Route::put('/profile', [AuthController::class, 'update']);
   Route::post('/profile', [AuthController::class, 'update']);
-  Route::post('/profile/activity', [AuthController::class, 'updateActivity']);  // Feed API routes - Some are available without authentication
+  Route::post('/profile/activity', [AuthController::class, 'updateActivity']);  
+  
+  // Feed API routes - Some are available without authentication
   Route::post('/posts', [FeedController::class, 'store']);
   Route::get('/posts/{id}', [FeedController::class, 'show']);
   Route::put('/posts/{id}', [FeedController::class, 'update']);
   Route::delete('/posts/{id}', [FeedController::class, 'destroy']);
   Route::post('/posts/{postId}/like', [FeedController::class, 'like']);
   Route::post('/posts/{postId}/bookmark', [FeedController::class, 'bookmark']);
+  
+  // Media API routes
+  Route::get('/media/images', [FeedController::class, 'getUserImages']);
   Route::post('/posts/{postId}/comments', [FeedController::class, 'storeComment']);
   Route::get('/posts/{postId}/comments', [FeedController::class, 'getComments']);
   Route::post('/comments/{commentId}/like', [FeedController::class, 'likeComment']);
