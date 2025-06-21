@@ -1,73 +1,189 @@
-# Welcome to your Lovable project
+# APIHub Frontend
 
-## Project info
+<div align="center">
+  [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://reactjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+  [![Vite](https://img.shields.io/badge/Vite-Latest-646CFF?logo=vite)](https://vitejs.dev/)
+  [![Shadcn/UI](https://img.shields.io/badge/UI-Shadcn-000000)](https://ui.shadcn.com/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+</div>
 
-**URL**: https://lovable.dev/projects/afcde18a-779f-47ff-99a6-8f558ee72980
+## 🌟 Overview
 
-## How can I edit this code?
+The APIHub frontend is a modern React application built with TypeScript, Vite, and Shadcn/UI components. It provides a rich user interface for the social platform, enabling users to connect with others, share content, and engage in real-time interactions.
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- 🎨 **Modern UI**: Clean and responsive design using Shadcn UI components
+- 🔐 **Authentication**: Complete user registration and login flows
+- 📱 **Responsive Design**: Mobile-first approach for all device sizes
+- 🌐 **State Management**: Efficient state management with context API
+- 📝 **Social Features**: Posts, comments, likes, and shares
+- 👥 **User Connections**: Friend requests and user networking
+- 💬 **Messaging**: Real-time chat functionality
+- 🎭 **Theming**: Light and dark mode support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/afcde18a-779f-47ff-99a6-8f558ee72980) and start prompting.
+## 🚀 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ 
+- npm or bun
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository (if not done already):
+   ```bash
+   git clone https://github.com/sculptorofcode/apihub.git
+   cd apihub/frontend
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```bash
+   npm install
+   # or with bun
+   bun install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Configure environment:
+   ```bash
+   cp .env.example .env
+   # Edit .env file with your API URL and other settings
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or with bun
+   bun dev
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+5. The application will be available at: http://localhost:5173
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 📁 Project Structure
+
+```
+frontend/
+│
+├── public/               # Static assets
+├── src/
+│   ├── api/              # API client and request functions
+│   ├── components/       # Reusable UI components
+│   │   ├── common/       # General purpose components
+│   │   ├── forms/        # Form components
+│   │   ├── layouts/      # Layout components
+│   │   └── ui/           # Shadcn UI components
+│   │
+│   ├── contexts/         # React Context providers
+│   ├── hooks/            # Custom React hooks
+│   ├── lib/              # Utility libraries
+│   ├── pages/            # Page components
+│   ├── services/         # Service layer for business logic
+│   ├── types/            # TypeScript type definitions
+│   ├── utils/            # Utility functions
+│   │
+│   ├── App.tsx           # Main application component
+│   ├── config.ts         # App configuration
+│   ├── index.css         # Global styles
+│   └── main.tsx          # Application entry point
+│
+├── .eslintrc.js          # ESLint configuration
+├── index.html            # HTML template
+├── package.json          # Project dependencies
+├── tailwind.config.ts    # Tailwind CSS configuration
+├── tsconfig.json         # TypeScript configuration
+└── vite.config.ts        # Vite configuration
 ```
 
-**Edit a file directly in GitHub**
+## 🧩 Components
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The frontend is built with reusable components:
 
-**Use GitHub Codespaces**
+- **Navigation**: Header, sidebar, and navigation menus
+- **Posts**: Post cards, comment sections, and interactions
+- **Forms**: Input components, validation, and submission handling
+- **Modals**: Dialogs for various actions and confirmations
+- **User**: Profile components, avatars, and status indicators
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎨 Styling
 
-## What technologies are used for this project?
+The application uses:
 
-This project is built with:
+- **Tailwind CSS** for utility-first styling
+- **Shadcn/UI** for beautiful, accessible components
+- **CSS Modules** for component-specific styles where needed
+- **Theme variables** for consistent design system
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🛠️ Development
 
-## How can I deploy this project?
+### Available Scripts
 
-Simply open [Lovable](https://lovable.dev/projects/afcde18a-779f-47ff-99a6-8f558ee72980) and click on Share -> Publish.
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build
+- `npm run lint`: Lint code with ESLint
 
-## Can I connect a custom domain to my Lovable project?
+### Adding New Components
 
-Yes, you can!
+1. Create a new file in the appropriate directory under `src/components/`
+2. Import necessary dependencies
+3. Define your component using TypeScript
+4. Export the component as default
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Example:
+```tsx
+import React from 'react';
+import { Button } from '@/components/ui/button';
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+interface MyComponentProps {
+  title: string;
+  onClick: () => void;
+}
+
+const MyComponent: React.FC<MyComponentProps> = ({ title, onClick }) => {
+  return (
+    <div className="p-4 border rounded">
+      <h2>{title}</h2>
+      <Button onClick={onClick}>Click Me</Button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+## 📦 Deployment
+
+To deploy the frontend:
+
+1. Build the production bundle:
+   ```bash
+   npm run build
+   ```
+
+2. The output will be in the `dist/` directory, which can be deployed to any static hosting service like:
+   - Vercel
+   - Netlify
+   - AWS S3 + CloudFront
+   - GitHub Pages
+
+## 🧪 Testing
+
+Run tests with:
+
+```bash
+npm run test
+```
+
+## 📚 Additional Resources
+
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Vite Guide](https://vitejs.dev/guide/)
+- [Shadcn/UI Documentation](https://ui.shadcn.com/)
+
+---
+
+<div align="center">
+  <sub>Built with React + TypeScript + Vite</sub>
+</div>
