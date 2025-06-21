@@ -84,7 +84,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
                 </svg>
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-primary mb-2">ApiHub</h2>
+            <h2 className="text-3xl font-bold text-primary mb-2">IdeaHub</h2>
             <p className="text-muted-foreground">Connect, share, and build relationships in a seamless digital experience.</p>
           </div>
         </motion.div>

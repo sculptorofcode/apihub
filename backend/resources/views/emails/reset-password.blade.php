@@ -58,11 +58,11 @@
         
         <p>This link will expire in 60 minutes.</p>
         
-        <p>Thank you,<br>ApiHub Team</p>
+        <p>Thank you,<br>IdeaHub Team</p>
     </div>
     
     <div class="footer">
-        <p>&copy; {{ date('Y') }} ApiHub. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} IdeaHub. All rights reserved.</p>
     </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'http://10.230.246.175:8000/api';
+export const API_URL = 'http://10.230.245.56:8000/api';
 
 // Create axios instance with default config
 const apiClient = axios.create({

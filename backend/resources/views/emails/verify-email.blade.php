@@ -47,7 +47,7 @@
     <div class="content">
         <p>Hello {{ $user->name }},</p>
         
-        <p>Thank you for registering with ApiHub! To complete your registration and access your account, please verify your email address.</p>
+        <p>Thank you for registering with IdeaHub! To complete your registration and access your account, please verify your email address.</p>
         
         <p>Click the button below to verify your email:</p>
         
@@ -60,11 +60,11 @@
         
         <p>If you did not create an account, no further action is required.</p>
         
-        <p>Thank you,<br>ApiHub Team</p>
+        <p>Thank you,<br>IdeaHub Team</p>
     </div>
     
     <div class="footer">
-        <p>&copy; {{ date('Y') }} ApiHub. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} IdeaHub. All rights reserved.</p>
     </div>
 </body>
 </html>

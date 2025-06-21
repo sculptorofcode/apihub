@@ -45,11 +45,12 @@ const App = () => (
       <Sonner />
       <AuthProvider>
         <BrowserRouter>
-          <Routes>            <Route path="/auth/login" element={
-            <AuthLayout title="Sign In" subtitle="Welcome back! Sign in with your username or email to continue." image="/auth-bg.svg">
-              <Login />
-            </AuthLayout>
-          } />
+          <Routes>
+            <Route path="/auth/login" element={
+              <AuthLayout title="Sign In" subtitle="Welcome back! Sign in with your username or email to continue." image="/auth-bg.svg">
+                <Login />
+              </AuthLayout>
+            } />
             <Route path="/auth/register" element={
               <AuthLayout title="Create Account" subtitle="Join us today! Create your account to start exploring." image="/auth-bg.svg">
                 <Register />
