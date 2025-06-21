@@ -120,22 +120,6 @@ const UserActions: React.FC<UserActionsProps> = ({ unreadMessagesCount }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      
-      {/* Messages Button with Counter */}
-      <Link to="/chat">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="relative text-white hover:bg-[var(--primary-600)] min-w-[44px] min-h-[44px] p-2"
-        >
-          <MessageCircle className="h-5 w-5 md:h-4 md:w-4" />
-          {unreadMessagesCount > 0 && (
-            <Badge className="absolute top-0 right-0 h-5 w-5 p-0 text-xs bg-[var(--accent-500)] hover:bg-[var(--accent-500)] flex items-center justify-center">
-              {unreadMessagesCount > 99 ? '99+' : unreadMessagesCount}
-            </Badge>
-          )}
-        </Button>
-      </Link>
 
       {/* User Profile Dropdown */}
       <DropdownMenu>

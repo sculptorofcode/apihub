@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'https://ideahub-backend-master-avinfw.laravel.cloud';
+export const API_URL = 'https://ideahub-backend-master-avinfw.laravel.cloud/api';
 
 // Create axios instance with default config
 const apiClient = axios.create({

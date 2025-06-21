@@ -13,13 +13,6 @@ function FeedSidebar({ currentUser, isLoading, isAuthenticated }: {
   isLoading: boolean;
   isAuthenticated: boolean;
 }) {
-  const shortcuts = [
-    { name: 'Saved Items', icon: Bookmark, link: '/bookmarks', count: 12 },
-    { name: 'Groups', icon: Users, link: '/groups', count: 5 },
-    { name: 'Newsletters', icon: Mail, link: '/newsletters', count: 3 },
-    { name: 'Events', icon: Calendar, link: '/events', count: 2 }
-  ];
-
   if (isLoading || !isAuthenticated || !currentUser) {
     return (
       <div className="space-y-4">
@@ -82,25 +75,6 @@ function FeedSidebar({ currentUser, isLoading, isAuthenticated }: {
               </Link>
             </Button>
           </div>
-
-          {/* Stats */}
-          <div className="border-t border-[var(--border)] px-4 py-3">
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex items-center space-x-1 text-muted-foreground">
-                <Eye className="h-4 w-4" />
-                <span>Profile viewers</span>
-              </div>
-              <Badge variant="secondary">0</Badge>
-            </div>
-
-            <div className="flex items-center justify-between text-sm mt-2">
-              <div className="flex items-center space-x-1 text-muted-foreground">
-                <TrendingUp className="h-4 w-4" />
-                <span>Post impressions</span>
-              </div>
-              <Badge variant="secondary">0</Badge>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
@@ -110,26 +84,6 @@ function FeedSidebar({ currentUser, isLoading, isAuthenticated }: {
           <h4 className="font-semibold text-[var(--text-900)] dark:text-[var(--text-50)] mb-3">
             Quick Access
           </h4>
-
-          <div className="space-y-2">
-            {shortcuts.map((shortcut) => (
-              <Link
-                key={shortcut.name}
-                to={shortcut.link}
-                className="flex items-center justify-between p-2 rounded-md hover:bg-[var(--background-100)] dark:hover:bg-[var(--background-700)] transition-colors"
-              >
-                <div className="flex items-center space-x-3">
-                  <shortcut.icon className="h-4 w-4 text-[var(--text-600)] dark:text-[var(--text-400)]" />
-                  <span className="text-sm text-[var(--text-900)] dark:text-[var(--text-50)]">
-                    {shortcut.name}
-                  </span>
-                </div>
-                <Badge variant="outline" className="text-xs">
-                  {shortcut.count}
-                </Badge>
-              </Link>
-            ))}
-          </div>
           <Button
             variant="ghost"
             size="sm"
