@@ -40,4 +40,9 @@ return [
         'base_url' => env('APIHUB_BASE_URL', 'https://api-hub-backend.onrender.com/api/v1'),
     ],
 
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'api_url' => env('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent'),
+    ],
+
 ];

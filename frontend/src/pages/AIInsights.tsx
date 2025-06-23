@@ -2,30 +2,65 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Brain, Lightbulb, TrendingUp, Users, Zap, ArrowRight } from 'lucide-react';
+import { Brain, Lightbulb, TrendingUp, Users, Zap, ArrowRight, Target, Wrench, AlertCircle } from 'lucide-react';
+
+interface Insight {
+  title: string;
+  description: string;
+  challenges: string[];
+  tools: string[];
+  beneficiaries: string[];
+}
+
+interface InsightsResponse {
+  insights: Insight[];
+}
 
 const AIInsights = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [insights, setInsights] = useState<Insight[]>([]);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
     setIsLoading(true);
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsLoading(false);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8000/api/ai-insights/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ idea: inputValue }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setInsights(data.data.insights);
+      } else {
+        setError(data.message || 'Failed to generate insights');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+      console.error('Error generating insights:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const examplePrompts = [
-    "Analyze the market potential for sustainable food packaging",
-    "What are emerging trends in remote work productivity tools?",
-    "Validate my app idea for connecting local farmers with consumers",
-    "Show me related discussions about AI in healthcare"
+    "I want to build an app that helps people swap unused household items with neighbors.",
+    "I'm thinking of creating a platform where local businesses can offer skill exchanges instead of payment.",
+    "I want to develop a service that connects elderly people with tech-savvy volunteers for digital assistance.",
+    "I'm considering a subscription box for locally-sourced, seasonal ingredients with recipe cards."
   ];
 
   const recentInsights = [
@@ -113,6 +148,87 @@ const AIInsights = () => {
             </div>
           </form>
         </Card>
+
+        {/* Error Display */}
+        {error && (
+          <Card className="mb-6 border-red-200 bg-red-50 dark:bg-red-900/20">
+            <div className="p-4 flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-red-600" />
+              <p className="text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          </Card>
+        )}
+
+        {/* AI Generated Insights */}
+        {insights.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-900)] dark:text-[var(--text-50)] mb-6">
+              AI Generated Insights
+            </h2>
+            <div className="space-y-6">
+              {insights.map((insight, index) => (
+                <Card key={index} className="p-6 border-l-4 border-l-blue-500">
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold text-[var(--text-900)] dark:text-[var(--text-50)]">
+                      {insight.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      {insight.description}
+                    </p>
+                    
+                    {insight.challenges.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Target className="h-4 w-4 text-red-500" />
+                          Challenges
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {insight.challenges.map((challenge, i) => (
+                            <Badge key={i} variant="destructive" className="text-xs">
+                              {challenge}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {insight.tools.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Wrench className="h-4 w-4 text-blue-500" />
+                          Tools & Technologies
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {insight.tools.map((tool, i) => (
+                            <Badge key={i} variant="secondary" className="text-xs">
+                              {tool}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {insight.beneficiaries.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Users className="h-4 w-4 text-green-500" />
+                          Who Benefits
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {insight.beneficiaries.map((beneficiary, i) => (
+                            <Badge key={i} variant="outline" className="text-xs">
+                              {beneficiary}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Example Prompts */}
         <div className="mb-6 sm:mb-8">
