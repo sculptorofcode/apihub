@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\FeedController;
 use App\Http\Controllers\Api\FriendsController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProfileController;
-use App\Http\Controllers\AIInsightsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
@@ -25,10 +24,6 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/auth/check-username', [AuthController::class, 'checkUsernameAvailability']);
-
-// AI Insights Routes (public access for now)
-Route::post('/ai-insights/generate', [AIInsightsController::class, 'generateInsights']);
-Route::get('/ai-insights/examples', [AIInsightsController::class, 'getExampleIdeas']);
 
 // Public Feed Routes
 Route::group(['middleware' => ['auth.optional']], function () {
